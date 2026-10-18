@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wanderlust-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wanderlust-backend
+  template:
+    metadata:
+      labels:
+        app: wanderlust-backend
+    spec:
+      containers:
+        - name: backend
+          image: alishabano786/wanderlust-rentals-backend:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
