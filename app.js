@@ -4,7 +4,16 @@ if(process.env.NODE_ENV != "production"){
 
 
 const express = require("express");
+const client = require("prom-client");
 const app = express();
+const register = new client.Registry();
+
+client.collectDefaultMetrics({ register });
+
+app.get("/metrics", async (req, res) => {
+    res.set("Content-Type", register.contentType);
+    res.end(await register.metrics());
+});
 const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override");
